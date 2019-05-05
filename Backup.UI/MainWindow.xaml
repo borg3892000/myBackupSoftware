@@ -1,0 +1,50 @@
+﻿<Window x:Class="Backup.UI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Backup.UI"
+        mc:Ignorable="d"
+        Title="Backup" Height="350" Width="525">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label  Grid.Row="0" Grid.Column="0"  Content="Total Initial Folders" />
+                <TextBlock  Grid.Row="0" Grid.Column="1" Text="{Binding MaxFolderCount}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                <Label  Grid.Row="1" Grid.Column="0" Content="Current Folder" />
+                <TextBlock  Grid.Row="1" Grid.Column="1" Text="{Binding CurrentFolder}" HorizontalAlignment="Stretch"  VerticalAlignment="Center" />
+                <Label  Grid.Row="2" Grid.Column="0" Content="Total files in folder" />
+                <TextBlock  Grid.Row="2" Grid.Column="1" Text="{Binding MaxFilesCurrentFolder}" HorizontalAlignment="Stretch"  VerticalAlignment="Center" />
+                <Label Grid.Row="3" Grid.Column="0" Content="Current Folder" />
+                <ProgressBar Grid.Row="3" Grid.Column="1" Minimum="0" Maximum="{Binding MaxFilesCurrentFolder}" Value="{Binding CurrentCountCurrentFolder}" Foreground="Red" Height="20" MinWidth="200"  HorizontalAlignment="Stretch" Margin="0,0,20,0" />
+                <Label Grid.Row="4" Grid.Column="0" Content="All Folders" />
+                <ProgressBar Grid.Row="4" Grid.Column="1" Minimum="0"  Maximum="{Binding MaxFolderCount}" Value="{Binding CurrentFolderNumber}" Height="20"  Foreground="Green" MinWidth="200" HorizontalAlignment="Stretch" Margin="0,0,20,0"/>
+                <Label  Grid.Row="5" Grid.Column="0"  Content="Total Processed Files" />
+                <TextBlock  Grid.Row="5" Grid.Column="1" Text="{Binding ProcessedCount}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                <Label  Grid.Row="6" Grid.Column="0"  Content="Total Copied Files" />
+                <TextBlock  Grid.Row="6" Grid.Column="1" Text="{Binding CopiedCount}" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button  Content=" Cancel " Command="{Binding CancelCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
+                    <Button  Content="{Binding PauseLabel}" Command="{Binding PauseCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20" />
+                </StackPanel>
+                <TextBlock  Grid.Row="8" Grid.ColumnSpan="2" Text="{Binding ErrorMessage}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="20" />
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

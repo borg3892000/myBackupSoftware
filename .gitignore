@@ -3,3 +3,11 @@
 ################################################################################
 
 /Backup/bin
+/Backup/obj
+/Backup.Library/bin
+/Backup.Library/obj
+/Backup.UI/bin
+/Backup.UI/obj/Debug/TempPE
+/Backup.UI/obj
+/packages/MvvmLightLibs.5.4.1
+/packages/CommonServiceLocator.2.0.2
