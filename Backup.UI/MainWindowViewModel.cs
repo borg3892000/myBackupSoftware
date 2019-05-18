@@ -14,7 +14,6 @@ namespace Backup.UI
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        //public int InitialFolderCount { get; set; } = 12;
         public string CurrentFolder { get; set; } = "testing";
         public int TotalFolderFiles { get; set; } = 0;
         public int MaxFilesCurrentFolder { get; set; } = 100;
@@ -22,10 +21,11 @@ namespace Backup.UI
         public int MaxFolderCount { get; set; }
         public int ProcessedCount { get; set; } = 0;
         public int CopiedCount { get; set; } = 0;
-        private BackupDetail previousDetails { get; set; } = null;
+        private BackupDetail previousDetails { get; set; } = new BackupDetail();
         private BackupDetail DetailsTotals { get; set; } = new BackupDetail();
 
         private List<Config> _configList = null;
+        private List<string> _ignoreList = null;
         private FileManager _fileManager = null;
         private bool _cancelFlag { get; set; } = false;
         private bool _pauseFlag { get; set; } = false;
@@ -49,7 +49,7 @@ namespace Backup.UI
                     i++;
                     try
                     {
-                        _fileManager.ProcessFolder(item);
+                        _fileManager.ProcessFolder(item, _ignoreList);
                     }
                     catch (Exception ex)
                     {
@@ -155,6 +155,7 @@ namespace Backup.UI
         {
             CurrentFolderNumber = currentFolderNumber;
             // Add the totals to the totals object
+            
             DetailsTotals.ProcessedCount += previousDetails.ProcessedCount;
             DetailsTotals.CopiedCount += previousDetails.CopiedCount;
         }
@@ -197,6 +198,7 @@ namespace Backup.UI
                 _exitOnEnd = false;
             }
             _configList = result.ConfigurationFolders;
+            _ignoreList = result.IgnoreFolders;
             MaxFolderCount = _configList.Count();
             //MessageBox.Show($"max folder count is {MaxFolderCount}", "main window", MessageBoxButton.OK);
 

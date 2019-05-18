@@ -27,7 +27,7 @@ namespace Backup.Library
             _pauseFlag = pause;
         }
 
-        public void ProcessFolder(Config config)
+        public void ProcessFolder(Config config, List<string> ignoreFolders)
         {
             if (!Directory.Exists(config.Source))
             {
@@ -36,8 +36,33 @@ namespace Backup.Library
             List<string> folders = new List<string>();
             folders.Add(config.Source);
             folders.AddRange(Directory.GetDirectories(config.Source, "*.*", SearchOption.AllDirectories));
+
+            // Remove any folders matching the ignore list
+            foreach (string ignoreFolder in ignoreFolders)
+            {
+                folders = folders.Where(x => !x.StartsWith(ignoreFolder, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
             foreach (string folder in folders)
             {
+                //if (folder.IndexOf("MyBackupSoftware") > 0 && folder.IndexOf(".git") > 0)
+                //{
+                //    var x = 1;
+                //}
+                //foreach (string ignoreFolder in ignoreFolders)
+                //{
+                //    // Skip this folder if it's in the ignoreFolder list or one of it's children
+                //    int length = ignoreFolder.Length;
+                //    if (folder.Length >= length && ignoreFolder.Equals(folder.Substring(0, length), StringComparison.OrdinalIgnoreCase))
+                //    {
+                //        continue;
+                //    }
+                //}
+                // Skip the folder if it's in the ignore list
+                //if (ignoreFolders.Count(x =>x.Equals(folder, StringComparison.OrdinalIgnoreCase)) > 0)
+                //{
+                //    continue;
+                //}
                 Debug.WriteLine($"Scanning folder {folder} for files");
                 string[] files = Directory.GetFiles(folder, "*.*", SearchOption.TopDirectoryOnly);
                 Debug.WriteLine($"Done scanning folder {folder} for files.  Calling ProcessFolder.");

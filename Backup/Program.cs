@@ -21,7 +21,7 @@ namespace Backup
             foreach (var item in result.ConfigurationFolders)
             {
                 Console.WriteLine($"Backing up {i} of {cc}: {item.Source}");
-                fileManager.ProcessFolder(item);
+                fileManager.ProcessFolder(item, result.IgnoreFolders);
             }
             Debugger.Break();
         }

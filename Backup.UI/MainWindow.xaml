@@ -32,7 +32,7 @@
                 <Label  Grid.Row="2" Grid.Column="0" Content="Total files in folder" />
                 <TextBlock  Grid.Row="2" Grid.Column="1" Text="{Binding MaxFilesCurrentFolder}" HorizontalAlignment="Stretch"  VerticalAlignment="Center" />
                 <Label Grid.Row="3" Grid.Column="0" Content="Current Folder" />
-                <ProgressBar Grid.Row="3" Grid.Column="1" Minimum="0" Maximum="{Binding MaxFilesCurrentFolder}" Value="{Binding CurrentCountCurrentFolder}" Foreground="Red" Height="20" MinWidth="200"  HorizontalAlignment="Stretch" Margin="0,0,20,0" />
+                <ProgressBar Grid.Row="3" Grid.Column="1" Minimum="0" Maximum="{Binding MaxFilesCurrentFolder}" Value="{Binding CurrentCountCurrentFolder}" Foreground="Green" Height="20" MinWidth="200"  HorizontalAlignment="Stretch" Margin="0,0,20,0" />
                 <Label Grid.Row="4" Grid.Column="0" Content="All Folders" />
                 <ProgressBar Grid.Row="4" Grid.Column="1" Minimum="0"  Maximum="{Binding MaxFolderCount}" Value="{Binding CurrentFolderNumber}" Height="20"  Foreground="Green" MinWidth="200" HorizontalAlignment="Stretch" Margin="0,0,20,0"/>
                 <Label  Grid.Row="5" Grid.Column="0"  Content="Total Processed Files" />

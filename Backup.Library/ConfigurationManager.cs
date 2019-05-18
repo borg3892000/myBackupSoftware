@@ -12,15 +12,11 @@ namespace Backup.Library
 {
     public class ConfigurationManager
     {
-
-        //public const string DATAFOLDER = @"c:\Program Files\MyBackupApp";
         public static ConfigurationResult Read()
         {
-            //string DATAFOLDER = Application.StartupPath;
             string dataFolder = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             ConfigurationResult retVal = new ConfigurationResult();
 
-            //List<Config> retVal = new List<Config>();
             if (!Directory.Exists(dataFolder))
             {
                 throw new System.ArgumentException($"Program Folder {dataFolder} doesn't exist.", "original");
@@ -31,25 +27,35 @@ namespace Backup.Library
                // MessageBox.Show($"Unable to read config file", "Startup Folder", MessageBoxButton.OK);
                 throw new System.ArgumentException($"Configuration file {configFilename} doesn't exist.", "original");
             }
-            //MessageBox.Show($"About to read the config file", "configuration", MessageBoxButton.OK);
+
             string[] lines = File.ReadAllLines(configFilename);
+            bool onIgnore = false;
             foreach (var line in lines)
             {
-                //MessageBox.Show($"Read a line", "configuration", MessageBoxButton.OK);
                 if (!string.IsNullOrWhiteSpace(line))
                 {
-                    string[] data = line.Split(',');
-                    if (data.Length < 2)
+                    
+                    if (line.Equals("<IGNORE>"))
                     {
-                        //MessageBox.Show($"invalid row in file.  line is '{line}'", "configuration", MessageBoxButton.OK);
+                        onIgnore = true;
+                        continue;
+                    }
+                    string[] data = line.Split(',');
+                    if (!onIgnore && data.Length < 2)
+                    {
                         retVal.Success = false;
                         throw new System.ArgumentException($"Invalid row in configuration file. line is '{line}'", "original");
                     }
-                    retVal.ConfigurationFolders.Add(new Config() { Source = data[0].Trim(), Destination = data[1].Trim() });
+                    if (onIgnore)
+                    {
+                        retVal.IgnoreFolders.Add(data[0].Trim());
+                    }
+                    else
+                    {
+                        retVal.ConfigurationFolders.Add(new Config() { Source = data[0].Trim(), Destination = data[1].Trim() });
+                    }
                 }
             }
-            //int cc = retVal.ConfigurationFolders.Count();
-            //MessageBoxResult result = MessageBox.Show($"{dataFolder} has {cc} folders.", "Startup Folder", MessageBoxButton.OK);
             return retVal;
         }
     }
